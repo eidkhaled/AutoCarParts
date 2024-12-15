@@ -1,5 +1,8 @@
 using AutoCarParts.BusinessLogic.CategoryService;
+using AutoCarParts.BusinessLogic.CustomerService;
+using AutoCarParts.BusinessLogic.InventoryService;
 using AutoCarParts.BusinessLogic.ManufacturesService;
+using AutoCarParts.BusinessLogic.OrderDtos;
 using AutoCarParts.BusinessLogic.PartService;
 using AutoCarParts.Models;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +15,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IPartService,PartService>();
 builder.Services.AddScoped<ICategoryRepo,CategoryRepo>();
 builder.Services.AddScoped<IManufacturesRepo,ManufacturesRepo>();
+builder.Services.AddScoped<IInventory,InventoryRepo>();
+builder.Services.AddScoped<IOrderRepo,OrderRepo>();
+builder.Services.AddScoped<ICustomer, CustomerRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
