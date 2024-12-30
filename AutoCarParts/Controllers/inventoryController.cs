@@ -16,7 +16,7 @@ namespace AutoCarParts.Controllers
             this.inventory = inventory;
         }
         [Authorize]
-        [HttpGet("Get All Inventory Parts")]
+        [HttpGet("GetAllInventoryParts")]
         public ActionResult Get() {
             var r=inventory.GetAllInventoryPArts();
         return Ok(r);    
