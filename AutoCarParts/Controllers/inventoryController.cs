@@ -1,4 +1,5 @@
 ﻿using AutoCarParts.BusinessLogic.InventoryService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +15,7 @@ namespace AutoCarParts.Controllers
         {
             this.inventory = inventory;
         }
+        [Authorize]
         [HttpGet("Get All Inventory Parts")]
         public ActionResult Get() {
             var r=inventory.GetAllInventoryPArts();

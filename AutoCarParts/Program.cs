@@ -5,7 +5,10 @@ using AutoCarParts.BusinessLogic.ManufacturesService;
 using AutoCarParts.BusinessLogic.OrderDtos;
 using AutoCarParts.BusinessLogic.PartService;
 using AutoCarParts.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +25,28 @@ builder.Services.AddScoped<ICustomer, CustomerRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+var JwtOptionts = builder.Configuration.GetSection("JwtSettings").Get<Jwt>();
+builder.Services.AddSingleton(JwtOptionts);
+builder.Services.AddAuthentication(
+    options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}
+                                   ).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer =JwtOptionts.Issuer,
+        ValidAudience = JwtOptionts.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(
+            Encoding.UTF8.GetBytes(JwtOptionts.SecretKey))
+    };
+});
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -34,7 +59,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.MapControllers();
