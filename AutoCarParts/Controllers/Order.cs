@@ -7,10 +7,10 @@ namespace AutoCarParts.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Order : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly IOrderRepo repo;
-        public Order(IOrderRepo _repo)
+        public OrderController(IOrderRepo _repo)
         {
             repo = _repo;
         }

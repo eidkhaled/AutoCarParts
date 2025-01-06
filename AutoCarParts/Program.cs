@@ -4,6 +4,7 @@ using AutoCarParts.BusinessLogic.InventoryService;
 using AutoCarParts.BusinessLogic.ManufacturesService;
 using AutoCarParts.BusinessLogic.OrderDtos;
 using AutoCarParts.BusinessLogic.PartService;
+using AutoCarParts.BusinessLogic.RepositoryPattern;
 using AutoCarParts.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +22,7 @@ builder.Services.AddScoped<IManufacturesRepo,ManufacturesRepo>();
 builder.Services.AddScoped<IInventory,InventoryRepo>();
 builder.Services.AddScoped<IOrderRepo,OrderRepo>();
 builder.Services.AddScoped<ICustomer, CustomerRepository>();
-
+builder.Services.AddScoped(typeof(IRepositoryCrud<>), typeof(RepositoryCrud<>));
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
